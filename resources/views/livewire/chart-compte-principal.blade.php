@@ -13,7 +13,7 @@
 			box-shadow: 5px 10px rgb(7,179,88);
 		}
 	</style>
-	<div class="row p-2">
+	{{-- <div class="row p-2">
 		<div class="col-md-4">
 			<div class="col-xl-12 col-sm-12">
 	
@@ -119,7 +119,7 @@
 			</div>
 		</div>	
 		
-	</div>
+	</div> --}}
 
 </div>
 

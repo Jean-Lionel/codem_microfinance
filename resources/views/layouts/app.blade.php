@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>	COOPDI  | MANAGER</title>
+  <title>{{ BASE_NAME }}</title>
 
 
 
@@ -37,7 +37,7 @@
     #nav-bar{
       /*background: #027368;*/
 
-      background: #5b8c85;
+      background: #0a2a6e;
       font-size: 12px;
       font-family: sans-serif;
       /*background: #f66d9b;*/ 
@@ -66,7 +66,7 @@
 
 	<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom box-shadow" id="nav-bar" >
     <h5 class="my-0 mr-md-auto font-weight-normal {{set_active_router('home')}}"><a href="{{ route('home')}}">
-      <i class="fa fa-home"></i> COOPDI BURUNDI</a></h5>
+      <i class="fa fa-home"></i> {{ BASE_NAME }}</a></h5>
       <nav class="my-2 my-md-0 mr-md-3">
 
          <a class="p-2  {{set_active_router('operations.index')}}" href="{{ route('operations.index') }}"><i class="fa fa-expand"></i> Operation</a>
@@ -107,7 +107,8 @@
        
         <a class="p-2 {{set_active_router('comptes.index')}}" href="{{ route('comptes.index') }}"><i class="fa fa-book"></i> Situation</a>
         <a class="p-2 {{set_active_router('placements.index')}}" href="{{ route('placements.index') }}"><i class="fa fa-inbox"></i> Placement</a>
-        <a class="p-2 {{set_active_router('decouverts.index')}}" href="{{ route('decouverts.index') }}"><i class="fa fa-tint"></i> Decouvert</a>
+        
+      {{--   <a class="p-2 {{set_active_router('decouverts.index')}}" href="{{ route('decouverts.index') }}"><i class="fa fa-tint"></i> Decouvert</a> --}}
        
 
         <a class="p-2 {{set_active_router('rapports')}}" href="{{ route('rapports.index') }}"><i class="fa fa-share"></i> Rapport</a>
@@ -118,8 +119,8 @@
         <a class="p-2 {{set_active_router('register')}}"  href="{{ route('users.index') }}"><i class="fa fa-users"></i> Utilisateur</a>
          @endcan
 
-           <a  class="p-2 {{set_active_router('ikirimba-membre')}}" href="{{ route('ikirimba-membre') }}">Epargnes</a>
-
+          {{--  <a  class="p-2 {{set_active_router('ikirimba-membre')}}" href="{{ route('ikirimba-membre') }}">Epargnes</a>
+ --}}
 
       </nav>
       {{-- <a class="btn btn-outline-primary" href="#">Deconnexion</a> --}}
