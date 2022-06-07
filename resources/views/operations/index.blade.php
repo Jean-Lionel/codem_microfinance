@@ -25,12 +25,7 @@
 				</form>
 			</div>
 		</div>
-
-
 		<div class="content-data">
-
-
-
 			@if($operations)
 
 			<table class="table table-bordered table-sm table-inverse table-hover">
@@ -243,11 +238,11 @@
 		  		<div class="main-content" id="borderaeau_print">
 
 		  		<header>
-		  		<span>COPDI</span>
-		  		<span>Coopérative pour le Développement "<b>INEZA IWACU</b>"</span>
-		  		<span>NIF : 4001068602</span>
-		  		<span>RC : 11900/18</span>
-		  		<span>Adresse : Q. Muramvya, 1<sup>er</sup> AV. N° 60</span>
+		  		<span>{{ BASE_NAME }}</span>
+		  		<span>{{ BASE_TITLE }}</span>
+		  		<span>NIF : {{ BASE_NIF }}</span>
+		  		<span>RC : </span>
+		  		<span>Adresse : </span>
 		  		</header>
 
 		  		<section>
@@ -285,69 +280,10 @@
 		  		<hr>
 		  		<span>Signature du deposant : </span>
 		  		</div>
-		  		</footer>
-
-		  		<hr>
-
-		  		<header>
-		  		<span>COPDI</span>
-		  		<span>Coopérative pour le Développement "<b>INEZA IWACU</b>"</span>
-		  		<span>NIF : 4001068602</span>
-		  		<span>RC : 11900/18</span>
-		  		<span>Adresse : Q. Muramvya, 1<sup>er</sup> AV. N° 60</span>
-		  		</header>
-
-		  		<section>
-		  		<p>
-		  		************************************************************ <br>
-		  		<span>${operation.type_operation} EN ESPECES BORDEREAU No :  ${operation.id} </span> <br>
-		  		*************************************************************
-		  		</p>
-
-		  		<p>du : ${ new Date(operation.created_at).toLocaleString('en-GB',{ timeZone: 'Africa/Bujumbura' })}</p>
-		  		<p>
-		  		Compte No : ${operation.compte_name}
-		  		<br>
-		  		Verse par : ${operation.operer_par}
-		  		</p>
-
-		  		<p>
-
-		  		Montant Total : ${formatNumber(operation.montant)} <br>
-
-
-		  		<span> Soit :  <b>${NumberToLetter(operation.montant)} FBU </b></span>
-
-		  		</p>
-
-		  		</section>
-
-		  		<footer>
-
-		  		<hr>
-		  		Guichet : Kinama <br>
-		  		Caissier : ${user.first_name+' '+ user.last_name}
-		  		<div>
-
-		  		<span>Signature Caissier : </span> <br>
-
-		  		<span>Signature du deposant : </span>
-		  		</div>
+		  		</footer>	
 
 		  		<hr>
 		
-
-
-
-
-
-
-
-
-
-
-
-
 		  		`);
 
 		  }

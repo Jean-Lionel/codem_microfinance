@@ -54,7 +54,9 @@ class ClientController extends Controller
                             $first_name = current($search_elements) ?? "";
                             $last_name = next($search_elements) ?? "";
 
-                            if($first_name and $last_name){
+                            if(intval($first_name)){
+                                $query->where('id','=',intval($first_name));
+                            }else if($first_name and $last_name){
                                 $query->where('nom','like','%'.$first_name.'%')
                                 ->where('prenom','like','%'.($last_name).'%');
                             }else{
@@ -114,13 +116,14 @@ class ClientController extends Controller
             // $request->upload_image->move(public_path('img\client_images'), $imageName);
 
         DB::transaction(function() use($request, $imageName) {
-            $client = Client::create($request->all()  + ['image' => $imageName ]);  
+            $client = Client::create($request->all()  + ['image' => $imageName ]);
+              $compte_name = str_pad($client->id,5, "0",STR_PAD_LEFT);
             Compte::create(
                 [
                     'montant' => 0,
                     'type_compte' => 'COURANT',
                     'client_id' => $client->id,
-                    'name' => 'COO-'.$client->id
+                    'name' => '00-'.$compte_name 
                 ]
             );
       //
