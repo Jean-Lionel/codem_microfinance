@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,3 +68,5 @@ Route::get("caissier_info/{id}",'AgenceController@historique')->name("caissier_i
 
 Route::get("recrouvement",'DecouvertController@recrouvement')->name("recrouvement");
 
+// Route for CODEM 
+Route::get('settings', [SettingController::class, 'index'])->name('settings');

@@ -131,12 +131,18 @@
        </a>
 
        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+         <a class="dropdown-item text-dark" href="{{  route('settings')  }}">
+          <i class="fas fa-cogs"></i>
+        Paramètre
+      </a>
         <a class="dropdown-item text-dark" href="{{ route('logout') }}"
         onclick="event.preventDefault();
         document.getElementById('logout-form').submit();">
         <i class="fa fa-power-off"></i> {{ __(' Logout') }}
         
       </a>
+
+     
 
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
         @csrf
