@@ -3,9 +3,6 @@
 
     <div class="row">
         <div class="col-md-6">
-            @dump(auth()->user())
-
-
           <h6>Mes Informations</h6>
           @if(Cache::has('user-is-online-' . $user->id))
               <span class="text-success">Online</span>
@@ -34,19 +31,19 @@
         <div class="col-md-6">
 
 
-            <div class="container">
+            <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Users</div>
                     <div class="card-body">
                         @php $users = DB::table('users')->get(); @endphp
-                        <div class="container">
-                            <table class="table table-bordered">
+                      
+                            <table class="table table-bordered table-sm">
                                 <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Email</th>
+                                    <th>Navigateur</th>
                                     <th>Status</th>
                                     <th>Last Seen</th>
                                 </tr>
@@ -54,7 +51,7 @@
                                 <tbody>
                                 @foreach($users as $user)
                                     <tr>
-                                        <td>{{$user->name}}</td>
+                                        <td>{{$user->first_name}}</td>
                                         <td>{{$user->email}}</td>
                                         <td>
                                             @if(Cache::has('user-is-online-' . $user->id))
@@ -68,7 +65,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="">
 	@livewire('settings.setting')
 {{-- 	@livewire('historique-caissier', ['post' => $post]) --}}
 </div>
