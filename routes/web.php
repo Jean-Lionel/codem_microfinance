@@ -70,3 +70,4 @@ Route::get("recrouvement",'DecouvertController@recrouvement')->name("recrouvemen
 
 // Route for CODEM 
 Route::get('settings', [SettingController::class, 'index'])->name('settings');
+Route::get('status-onlines', [UserController::class, 'userOnlineStatus']);
