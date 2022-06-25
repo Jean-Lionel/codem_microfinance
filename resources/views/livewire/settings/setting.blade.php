@@ -34,9 +34,20 @@
                     <td>
                         @if ($setPassword)
                             {{-- expr --}}
-                            <form action="">
-                                
+                            <form action="" wire:submit.prevent="updatePassword">
+                                <input type="password" class="form-control form-control-sm mb-1" wire:model="last_password" placeholder="Votre Mot de pass">
+                                <input type="password" class="form-control form-control-sm mb-1" wire:model="new_password" placeholder="Nouveau mot de passe">
+                                <input type="password" class="form-control form-control-sm mb-1" wire:model="confirm_password"  placeholder="Confirmer votre mot de passe">
+                                <button type="submit" class="btn btn-block btn-outline-primary btn-sm">Modifier</button>
                             </form>
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @if ($showMessage)
+                            {{-- expr --}}
+                            <p>{{ $showMessage }}</p>
                         @endif
                     </td>
                 </tr>
