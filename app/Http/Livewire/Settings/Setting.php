@@ -32,7 +32,11 @@ class Setting extends Component
        if($this->new_password === $this->confirm_password){
         
         if (Hash::check($this->last_password, $this->user->password)) {
-            $this->showMessage  = "Password already has been updated";
+            $this->showMessage  = "Votre mot de passe a été bien modifié";
+            $this->user->update(['password' => bcrypt($this->new_password)]);
+            $this->setPassword  = false;
+        }else{
+            $this->showMessage  = "Votre ancien mot de passe n'est pas correctes";
         }
         
        }else{
