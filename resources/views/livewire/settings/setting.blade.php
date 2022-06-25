@@ -25,6 +25,21 @@
 
                     </td>
                 </tr>
+                <tr>
+                    <th>
+                        <button class="btn btn-link"
+
+                        wire:click="setNewPassword">Modifier votre Mot de passe</button>
+                    </th>
+                    <td>
+                        @if ($setPassword)
+                            {{-- expr --}}
+                            <form action="">
+                                
+                            </form>
+                        @endif
+                    </td>
+                </tr>
                 
             </table>
         </div>
@@ -52,7 +67,7 @@
                                 @foreach($users as $user)
                                     <tr>
                                         <td>{{$user->first_name}}</td>
-                                        <td>{{$user->email}}</td>
+                                        <td>{{$user->navigateur}}</td>
                                         <td>
                                             @if(Cache::has('user-is-online-' . $user->id))
                                                 <span class="text-success">Online</span>
