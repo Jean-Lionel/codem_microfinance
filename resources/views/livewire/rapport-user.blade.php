@@ -46,19 +46,7 @@
 					</tr>
 				</tbody> 
 			</table>
-			<h4 class="text-center">IKIRIMBA</h4>
-
-			<ul class="list-group">
-
-				@foreach ($kirimbaOperations as $element)
-					{{-- expr --}}
-					<li class="list-group-item d-flex justify-content-between" >
-					<h5>{{ $element->type_operation ?? ""}} : </h5>
-					<h5>{{ number_format( $element->montant ?? 0) }}  FBU  </h5>
-
-				</li>
-				@endforeach
-							</ul>		
+				
 		</div>
 	</div>
 
