@@ -108,9 +108,7 @@
         <a class="p-2 {{set_active_router('comptes.index')}}" href="{{ route('comptes.index') }}"><i class="fa fa-book"></i> Situation</a>
         <a class="p-2 {{set_active_router('placements.index')}}" href="{{ route('placements.index') }}"><i class="fa fa-inbox"></i> Placement</a>
         
-      {{--   <a class="p-2 {{set_active_router('decouverts.index')}}" href="{{ route('decouverts.index') }}"><i class="fa fa-tint"></i> Decouvert</a> --}}
-       
-
+        <a class="p-2 {{set_active_router('decouverts.index')}}" href="{{ route('decouverts.index') }}"><i class="fa fa-tint"></i> Decouvert</a>
         <a class="p-2 {{set_active_router('rapports')}}" href="{{ route('rapports.index') }}"><i class="fa fa-share"></i> Rapport</a>
         {{-- <a class="p-2 {{set_active_router('rapports')}}" href="{{ route('placement-client.index') }}"><i class="fa fa-share"></i>Compte des place</a>
  --}}

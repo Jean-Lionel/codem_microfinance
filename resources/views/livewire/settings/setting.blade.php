@@ -5,7 +5,7 @@
         <div class="col-md-6">
           <h6>Mes Informations</h6>
           @if(Cache::has('user-is-online-' . $user->id))
-              <span class="text-success">Online</span>
+              <span class="text-success">Vous êtes connectés</span>
           @else
               <span class="text-secondary">Offline</span>
           @endif
@@ -44,10 +44,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td colspan="2">
                         @if ($showMessage)
                             {{-- expr --}}
-                            <p>{{ $showMessage }}</p>
+                            <p class="text-success text-center">{{ $showMessage }}</p>
                         @endif
                     </td>
                 </tr>
@@ -78,7 +78,9 @@
                                 @foreach($users as $user)
                                     <tr>
                                         <td>{{$user->first_name}}</td>
-                                        <td>{{$user->navigateur}}</td>
+                                        <td>
+                                            <small>{{$user->navigateur}}</small>
+                                        </td>
                                         <td>
                                             @if(Cache::has('user-is-online-' . $user->id))
                                                 <span class="text-success">Online</span>
