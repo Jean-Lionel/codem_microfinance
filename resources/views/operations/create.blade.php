@@ -13,6 +13,12 @@
 			<img src="{{ asset('logo/loader.gif') }}" />
 		</div>
 	</div>
+
+	<div class="col-md-4"></div>
+	<div class="col-md-4">
+	
+	</div>
+
 </div>
 
 @endsection

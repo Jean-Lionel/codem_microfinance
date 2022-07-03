@@ -154,6 +154,7 @@
 					})
 					.done(function(data) {
 						
+						//console.log("Decouverts : ",data.decouverts);
 						if(!data.error){
 							$('.client-info').html(client_information(data))
 
@@ -176,6 +177,27 @@
 
 
 		let client_information = (data) => {
+
+			var tr_decouverts = `<tbody`;
+
+			if(data.decouverts.length > 0){
+
+				data?.decouverts?.map((e , index)=> {
+					var tr = `
+					<tr>
+						<td>${++index}</td>
+						<td>${e.id}</td>
+						<td>${e.montant_restant}</td>
+						<td>${e.date_fin}</td>
+					</tr>
+					`
+					tr_decouverts += tr;
+				})
+
+
+			}
+
+			tr_decouverts += `</tbody>`;
 
 			console.log(data);
 			let html = `
@@ -251,26 +273,33 @@
 			</div>
 			</div>
 
+			<div>
+			Decouvert a remboursé
+			<table class="table table-sm">
+				<thead class="table-sm bg-secondary">
+					<tr>
+						<th>#</th>
+						<th>Decouvert No</th>
+						<th>Montant restant</th>
+						<th>Délai Limite</th>
+					</tr>
+				</thead>
+				${tr_decouverts}
+			</tabl>
+			</div>
+
 			`
 
 			return html;
 		}
-
-
-
 		let save = $('button[type="submit"]')
-
 
 		save.on('click' , function(event){
 			event.preventDefault()
 			if (isDoubleClicked($(this))) {
-
 				return;
 			}
-
-
 			console.log(event);
-
 			$.ajaxSetup({
 				headers: {
 					'X-CSRF-TOKEN': $('[name="_token"]').val()
@@ -282,7 +311,6 @@
 			let operer_par = $('#operer_par').val()
 			let type_operation = $('#type_operation').val()
 			let cni = $('#cni').val()
-
 
 			if(montant <= 0 || isNaN(montant)){
 
@@ -333,7 +361,6 @@
 				
 				let body = response.error ? response.error : response.success
 				
-
 				swal.fire(
 					title,
 					body,

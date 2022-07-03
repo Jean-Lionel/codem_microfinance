@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\FormCompteRequest;
 use App\Models\Client;
 use App\Models\Compte;
+use App\Models\Decouvert;
 use App\Models\Operation;
-use App\Models\PaiementPlacement;
 use App\Models\TenueCompte;
 use Illuminate\Http\Request;
+use App\Models\PaiementPlacement;
+use App\Http\Requests\FormCompteRequest;
 
 class CompteController extends Controller
 {
@@ -136,10 +137,18 @@ class CompteController extends Controller
         if($compte == null)
             return response()->json(['error' => 'Invalide']);
 
+        $decouverts = Decouvert::where('compte_name','=',$compte_name)
+                                ->where('paye','=', 0)
+                                ->get();
+
         // if(!$compte)
         //    return response()->json(['error' => 'Invalide']);
 
-        return response()->json(['client' => $compte->client,'compte'=>$compte]);
+        return response()->json([
+            'client' => $compte->client,
+            'compte'=>$compte,
+            'decouverts'=>$decouverts,
+        ]);
     
     }
 
@@ -151,26 +160,28 @@ class CompteController extends Controller
 
         $compte_name = \Request::get('compte_name');
         $date_val = \Request::get('date_val');
-
-        $operations = Operation::where('compte_name','=',$compte_name)->get();
-        $paiment_placement = PaiementPlacement::where('compte_name','=',$compte_name)->get();
-
-       
-        $tenus_comptes = TenueCompte::where('compte_name','=',$compte_name)->get();
-
-        //$placement = TenueCompte::where('compte_name','=',$compte_name)->get();
-
         $compte = Compte::where('name','=',$compte_name)->first();
 
         if(!$compte)
             return response()->json(['error'=>'Invalide compte name']);
+
+        $operations = Operation::where('compte_name','=',$compte_name)->get();
+        $paiment_placement = PaiementPlacement::where('compte_name','=',$compte_name)->get();
+
+        $tenus_comptes = TenueCompte::where('compte_name','=',$compte_name)->get();
+
+        //$placement = TenueCompte::where('compte_name','=',$compte_name)->get();
+
+        $decouverts = Decouvert::where('compte_name','=',$compte_name)
+                                ->get();
 
         return response()->json([
             'operations' => $operations,
             'paiement_placement' => $paiment_placement,
             'tenus_comptes' => $tenus_comptes,
             'client' => $compte->client ? $compte->client : "",
-            'compte_name' =>  $compte_name 
+            'compte_name' =>  $compte_name ,
+            'decouverts' =>  $decouverts ,
         ]);
 
     }
