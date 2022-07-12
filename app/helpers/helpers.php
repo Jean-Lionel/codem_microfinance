@@ -28,9 +28,16 @@ function warningMessage($message = 'Opération echoué'){
 }
 //Formatage des chiffres 
 function numberFormat($number){
-	return number_format($number,2, ',', ' ');
+	return number_format($number,0, ',', ' ');
 }
 
+function calculerPourcentage($a, $b){
+	$number = 0;
+	if($b !== 0){
+		$number = ($a * 100) / $b;
+	}
+	return numberFormat($number, 2) . " %";
+}
 function dateFormat($date){
 	$noTime = (date('H:i:s', strtotime($date)) == '00:00:00');
 	if($noTime)

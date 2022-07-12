@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Compte;
 use App\Models\TenueCompte;
 use Illuminate\Http\Request;
+use App\Models\TenuCompteurWatch;
 
 class TenueCompteController extends Controller
 {
@@ -27,47 +28,19 @@ class TenueCompteController extends Controller
     //LA function retourner le montant mensuelle de tout les employes et retourner les comptes de le montant est indufisant
 
 	public function tenueMensuelle(){
+		$response = "";
+		if(!TenuCompteurWatch::isAllReadyTaken()){
+			TenuCompteurWatch::tenueCompteMensuel();
+		}else{
+			$response = " Déjà réalisée";
+		}
 
-		$compte_all = Compte::all();
+		$tenus_comptes = TenuCompteurWatch::latest()->paginate(10);
 
-		$compteError = TenueCompte::allAccountPaiment($compte_all);
-
-		$montantTotal = TenueCompte::montantMensuelle();
-
-		// $test = TenueCompte::tenueMensuelPaye('COO-2');
-
-		// $clients = function ($compteError){
-		// 	$c = [];
-		// 	foreach ($compteError as $value) {
-		// 		$c[] = $value->client;
-		// 	}
-		// 	return $c;
-		// };
-
-		// return response()->json(
-
-		// 	[
-		// 		'compte_error' => $compteError, 
-		// 		'client' => $clients($compteError),
-		// 		'montant_total_mensuel'=>$montantTotal 
-
-		// 	]
-		// );
-		// 
-		
-
-		$data =  [
-			'compte_error' => $compteError, 
-			// 'client' => $clients($compteError),
-			'montant_total_mensuel'=>$montantTotal 
-
-		];
-
-		
-		return view('rapports.unpaid',
+		return view('rapports.tenucomptes',
 			[
-				'compte_error' => $compteError, 
-				'montant_total_mensuel'=>$montantTotal 
+				'tenus_comptes' => $tenus_comptes, 
+				'response' => $response, 
 			]
 
 		);
