@@ -27,6 +27,8 @@ class OperationController extends Controller
 
     public function index()
     {
+        
+
         // $sum = Operation::where('type_operation','=','VERSEMENT')->sum('montant');
         // $retrait = Operation::where('type_operation','=','RETRAIT')->sum('montant');
         // dump($sum);
@@ -65,7 +67,7 @@ class OperationController extends Controller
         
         // TAKE TENU DE COMPTE 
         
-      //  TenuCompteurWatch::takeTenuCompte();
+     
 
        return view('operations.index',compact('operations','search', 'versement','retrait','montant_caisse'));
    }

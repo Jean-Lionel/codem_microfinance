@@ -2,7 +2,7 @@
 
 use App\Models\User;
 use MercurySeries\Flashy\flashy;
-define('TENU_COMPTE_MENSUELLE', 0);
+define('TENU_COMPTE_MENSUELLE', 700);
 define('NOMBRE_AGENCE', 2);
 function get_user_ById($id){
 	$user = User::find($id);

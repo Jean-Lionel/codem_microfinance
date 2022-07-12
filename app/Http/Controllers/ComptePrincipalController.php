@@ -120,7 +120,7 @@ class ComptePrincipalController extends Controller
 
         $errors = '';
 
-        $comptePrincipal = ComptePrincipal::latest()->first();
+        $comptePrincipal = ComptePrincipal::orderBy('id', 'DESC')->first();
 
         if(!$comptePrincipal){
             ComptePrincipal::create(['montant' => 0]);
@@ -181,6 +181,8 @@ class ComptePrincipalController extends Controller
 
             $dateOfLastActivity = new Carbon($comptePrincipal->created_at);
 
+            //dd($comptePrincipal);
+
             if($dateOfLastActivity->isCurrentDay()){
 
                 // $comptePrincipal->update(['montant' => $newValue]);
@@ -224,6 +226,8 @@ class ComptePrincipalController extends Controller
             if($response['day'] == 'TODAY'){
                 $comptePrincipal = ComptePrincipal::latest()->first();
 
+                //dd($comptePrincipal);
+
               $comptePrincipal->update(['montant' => $response['value']]);
             }
 
@@ -263,7 +267,7 @@ class ComptePrincipalController extends Controller
             $caisse_caissier = CaisseCaissier::where("user_id",Auth::user()->id)->first();
            // dd($caisse_caissier);
             if(! $caisse_caissier){
-                throw new Exception("Vous n'avez pas  à aucune caisse ", 1);
+                throw new Exception("Vous n'avez pas   aucune caisse ", 1);
             }
 
             if($type_Operation == 'ADD'){

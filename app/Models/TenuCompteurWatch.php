@@ -32,53 +32,112 @@ class TenuCompteurWatch extends Model
         }
     }
 
-    public static function takeTenuCompte(){
-        if(!self::isAllReadyTaken()){
-            //$all_compte = Compte::where('montant', '>=', TENU_COMPTE_MENSUELLE )->get();
-            $all_compte = Compte::all();
-            //DESCRIPTION
-            $error_compte = Compte::where('montant', '<', TENU_COMPTE_MENSUELLE )->get()->toJson();
 
-            $montant_total = $all_compte->count() * TENU_COMPTE_MENSUELLE; 
-            //MONTANT TOTAL DU TENU DE COMPTE
-            
-           try {
+    public static function tenueCompteMensuel(){
+        // Pay More attention for this code 12/7/2022 a Rutovu chez Thierry
+        // 
+        if(!self::isAllReadyTaken()){
+        $comptes_soldes = Compte::where('montant', '<', TENU_COMPTE_MENSUELLE )->count();
+        $comptes = Compte::where('montant', '>=', TENU_COMPTE_MENSUELLE)->get();
+
+        try {
             DB::beginTransaction();
-            foreach ($all_compte as $key => $compte) {
-                // code...
-                // ENLEVE LE MONTANT SUR CHAQUE COMPTE
-                // ENREGISTRE DANS LES TENUS DE COMPTE
+            $tenuCompte = [];
+            foreach($comptes as $compte){
                 $compte->montant -= TENU_COMPTE_MENSUELLE;
                 $compte->save();
-                TenueCompte::create([
-                'compte_name' =>  $compte->name,
-                'montant' => TENU_COMPTE_MENSUELLE,
-               ]);
+                $tenuCompte[] = [
+                    'compte_name' => $compte->name,
+                    'montant' => TENU_COMPTE_MENSUELLE,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
             }
-             
+            $x_element = array_chunk($tenuCompte, 1000);
+
+            foreach ($x_element as  $value) {
+                // code...
+                 TenueCompte::insert($value);
+            }
+           
+            $montant_total = $comptes->count() *  TENU_COMPTE_MENSUELLE;
+
             ComptePrincipalOperationController::storeOperation($montant_total,'tenue_compte',"COMPTE PRINCIPAL");
             ComptePrincipalController::store_info($montant_total, 'ADD');
 
-            if(self::isAllReadyTaken()){
-                throw new \Exception("Opération a été déjà realisé par quelque d'autre", 1);
-                
-            }
             TenuCompteurWatch::create([
                     "montant" => $montant_total,
                     "status"  => "SUCCESS",
-                    "comptes_error" => $error_compte ,
-                    "comptes_success" => $all_compte->toJson(),
+                    "comptes_error" => $comptes_soldes ,
+                    "comptes_success" => $comptes->count(),
             ]);
-            DB::commit();   
-            //echo "REUSSI"; 
-           } catch (\Exception $e) {
-             DB::rollback();  
-             dd( $e);
-           }
+
+            DB::commit();
+            
+        } catch (\Exception $e) {
+            dump($e->getMessage());
+            DB::rollback();
+        }
+
+        dd("Finish");
 
         }else{
-            
+
+            dump("Orleady Taken ");
+
         }
+
     }
+
+
+
+    // public static function takeTenuCompte(){
+    //     if(!self::isAllReadyTaken()){
+    //         //$all_compte = Compte::where('montant', '>=', TENU_COMPTE_MENSUELLE )->get();
+    //         $all_compte = Compte::all();
+    //         //DESCRIPTION
+    //         $error_compte = Compte::where('montant', '<', TENU_COMPTE_MENSUELLE )->get()->toJson();
+
+    //         $montant_total = $all_compte->count() * TENU_COMPTE_MENSUELLE; 
+    //         //MONTANT TOTAL DU TENU DE COMPTE
+            
+    //        try {
+    //         DB::beginTransaction();
+    //         foreach ($all_compte as $key => $compte) {
+    //             // code...
+    //             // ENLEVE LE MONTANT SUR CHAQUE COMPTE
+    //             // ENREGISTRE DANS LES TENUS DE COMPTE
+    //             $compte->montant -= TENU_COMPTE_MENSUELLE;
+    //             $compte->save();
+    //             TenueCompte::create([
+    //             'compte_name' =>  $compte->name,
+    //             'montant' => TENU_COMPTE_MENSUELLE,
+    //            ]);
+    //         }
+             
+    //         ComptePrincipalOperationController::storeOperation($montant_total,'tenue_compte',"COMPTE PRINCIPAL");
+    //         ComptePrincipalController::store_info($montant_total, 'ADD');
+
+    //         if(self::isAllReadyTaken()){
+    //             throw new \Exception("Opération a été déjà realisé par quelque d'autre", 1);
+                
+    //         }
+    //         TenuCompteurWatch::create([
+    //                 "montant" => $montant_total,
+    //                 "status"  => "SUCCESS",
+    //                 "comptes_error" => $error_compte ,
+    //                 "comptes_success" => $all_compte->toJson(),
+    //         ]);
+    //         DB::commit();   
+    //         //echo "REUSSI"; 
+    //        } catch (\Exception $e) {
+    //          DB::rollback();  
+    //          dd( $e);
+    //        }
+
+    //     }else{
+            
+    //     }
+    // }
 
 }

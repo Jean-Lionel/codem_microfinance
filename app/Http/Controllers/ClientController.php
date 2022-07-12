@@ -123,7 +123,7 @@ class ClientController extends Controller
                     'montant' => 0,
                     'type_compte' => 'COURANT',
                     'client_id' => $client->id,
-                    'name' => '00-'.$compte_name 
+                    'name' => 'C-00-'.$compte_name 
                 ]
             );
       //

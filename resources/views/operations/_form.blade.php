@@ -8,7 +8,7 @@
 	<div class="col-md-6">
 		<fieldset class="form-group">
 			<label for="compte_name">Numero du compte</label>
-			<input type="text" class="form-control {{$errors->has('compte_name') ? 'is-invalid' : 'is-valid' }}" id="compte_name" name="compte_name" value="{{ old('compte_name') ?? $operation->compte_name ? $operation->compte_nam : 'COO-'}}">
+			<input type="text" class="form-control {{$errors->has('compte_name') ? 'is-invalid' : 'is-valid' }}" id="compte_name" name="compte_name" value="{{ old('compte_name') ?? $operation->compte_name ? $operation->compte_nam : 'C-00-'}}">
 
 			{!! $errors->first('compte_name', '<small class="help-block invalid-feedback">:message</small>') !!}
 
@@ -55,7 +55,6 @@
 			{!! $errors->first('cni', '<small class="help-block invalid-feedback">:message</small>') !!}
 		</fieldset>
 
-		
 	</div>
 
 	<div class="row container hide  ">
@@ -65,7 +64,6 @@
 			<input type="text" class="form-control {{$errors->has('montant') ? 'is-invalid' : 'is-valid' }} number" id="montant"   name="montant" value="{{ old('montant') ?? $operation->montant }}">
 			{!! $errors->first('montant', '<small class="help-block invalid-feedback">:message</small>') !!}
 		</fieldset>
-
 		<div class="form-group offset-md-1  col-md-5">
 			<label for=""></label>
 			<button type="submit" class="btn mr-0 mt-2 btn-outline-primary btn-block"> {{ $btnTitle}}</button>
@@ -122,14 +120,8 @@
 		// $('#type_operation').val('RETRAIT')
 		$('#cni').val(cni)
 		$('#compte_name').attr('disabled',true)
-
 		$('.hide').show()
-		
-
 	}
-
-
-
 	jQuery(document).ready(function() {
 		let hide = $('.hide').hide()
 
@@ -182,7 +174,7 @@
 
 			if(data.decouverts.length > 0){
 
-				data?.decouverts?.map((e , index)=> {
+				data.decouverts.map((e , index)=> {
 					var tr = `
 					<tr>
 						<td>${++index}</td>
