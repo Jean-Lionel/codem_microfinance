@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="container">
-	
+	<h6 class="text-right">Historique des tenus de comptes</h6>
 	<table class="table table-hover table-striped  tbody-sm text-center">
 		<thead class="table-info ">
 			<tr>
@@ -23,7 +23,12 @@
 						<td>{{$element->created_at}}</td>
 						<td >{{numberFormat($element->montant)}}</td>
 						<td>
-							{{$element->comptes_success}}
+							<b>{{$element->comptes_success}}</b>
+							/ <small>
+								<em>
+									{{$element->comptes_error + $element->comptes_success}}
+								</em>
+							</small>
 							
 						</td>
 						<td class="d-flex justify-content-around">
@@ -36,9 +41,12 @@
 
 							<small class="badge-danger">
 							{{
-								calculerPourcentage($element->comptes_error, ($element->comptes_error + $element->comptes_success ))
+								calculerPourcentage($element->comptes_error, 
+									($element->comptes_error + $element->comptes_success ))
 							}}
 							</small>
+
+							
 
 						</td>
 
