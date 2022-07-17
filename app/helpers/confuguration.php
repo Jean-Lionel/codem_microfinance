@@ -2,7 +2,7 @@
 
 
 define('BASE_NAME', 'CODEM');
-define('BASE_TITLE', 'CODEM TITLE');
-define('BASE_NIF', '0000xxxx');
-define('BASE_RC', '0000xxxx');
-define('BASE_ADDRESS', '0000xxxx');
+define('BASE_TITLE', 'COOPERATIVE POUR LE DEVELLOPPEMENT MITUELLE');
+define('BASE_NIF', '4002010405');
+define('BASE_RC', 'SC 0148/2022');
+define('BASE_ADDRESS', 'KINAMA');

@@ -241,8 +241,8 @@
 		  		<span>{{ BASE_NAME }}</span>
 		  		<span>{{ BASE_TITLE }}</span>
 		  		<span>NIF : {{ BASE_NIF }}</span>
-		  		<span>RC : </span>
-		  		<span>Adresse : </span>
+		  		<span>RC : {{ BASE_RC}} </span>
+		  		<span>Adresse :{{ BASE_ADDRESS }} </span>
 		  		</header>
 
 		  		<section>
@@ -262,7 +262,6 @@
 		  		<p>
 
 		  		Montant Total : ${formatNumber(operation.montant)} <br>
-
 
 		  		<span> Soit :  <b>${NumberToLetter(operation.montant)} FBU </b></span>
 
