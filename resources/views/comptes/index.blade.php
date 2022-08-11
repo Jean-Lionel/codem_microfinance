@@ -253,7 +253,7 @@
 		<h3 class="text-center"> Historique du compte </h3>
 		${table_operation}
 		</div>
-		{{-- <hr>
+		<hr>
 		<div>
 		<h3 class="text-center"> Tenus du compte</h3>
 		${table_tenus_comptes}
@@ -264,8 +264,6 @@
 		<h3 class="text-center">Rembourssement sur votre placement</h3>
 		${table_paiement_placement}
 		</div>
-
-		--}}
 
 		</div>
 		</div>

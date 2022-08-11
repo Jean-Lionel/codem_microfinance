@@ -79,11 +79,11 @@ class TenuCompteurWatch extends Model
             DB::rollback();
         }
 
-        dd("Finish");
+        //dd("Finish");
 
         }else{
 
-            dump("Orleady Taken ");
+            //dump("Orleady Taken ");
 
         }
 

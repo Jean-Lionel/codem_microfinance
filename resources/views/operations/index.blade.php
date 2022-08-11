@@ -47,7 +47,7 @@
 					<tr>
 						<td>{{$key + 1}}</td>
 						<td>{{ $operation->compte_name}}</td>
-						<td>{{ numberFormat($operation->montant)}}</td>
+						<td class="text-right" style="padding-right: 20px;" >{{ numberFormat($operation->montant)}}</td>
 						<td>{{ $operation->type_operation}}</td>
 						<td>{{ dateFormat($operation->created_at)}}</td>
 						<td>
