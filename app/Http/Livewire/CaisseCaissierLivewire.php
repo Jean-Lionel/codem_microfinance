@@ -13,6 +13,8 @@ class CaisseCaissierLivewire extends Component
 	public $user_id;
 	public $montant;
 	public $type_operation;
+    public $showInputData;
+    public $montantRemis;
 
 	public $rules = [
 		"user_id" => "required|exists:users,id",
@@ -27,6 +29,11 @@ class CaisseCaissierLivewire extends Component
         	"users" => $users,
             "caisse_caissiers" => $caisse_caissiers,
         ]);
+    }
+
+    public function showInput($caisse){
+        $this->showInputData = $caisse;
+        $this->montantRemis = 0;
     }
     public function saveCaisseOperation(){
     	$this->validate($this->rules);
@@ -66,17 +73,20 @@ class CaisseCaissierLivewire extends Component
 
     public function validerReception($id){
 
-        //dd($id);
+        //dd($id,$this->montantRemis);
+
+        // if()
 
         $caisse = CaisseCaissier::find($id);
         try {
             DB::beginTransaction();
                 OperationCaisse::create([
-                    "montant" => $caisse->montant,
+                    "montant" => ($this->montantRemis),
+                    "montant_restant" => ($caisse->montant - $this->montantRemis) ,
                     "user_id" => $caisse->user_id,
                     "type_operation" => "RETOUR SOIR"
                 ]);
-                $caisse->montant = 0;
+                $caisse->montant = ($caisse->montant - $this->montantRemis);
                 $caisse->save();
             DB::commit(); 
         } catch (\Exception $e) {

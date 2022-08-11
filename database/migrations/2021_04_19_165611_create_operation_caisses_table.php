@@ -18,6 +18,7 @@ class CreateOperationCaissesTable extends Migration
             $table->foreignId("user_id");
             $table->string("type_operation");
             $table->double("montant",64,4);
+            $table->double("montant_restant",64,4);
             $table->foreignId("admin_id");
             $table->timestamps();
             $table->softDeletes();

@@ -29,7 +29,7 @@
     		</form>
     	</div>
     	<div class="col-md-8">
-    		<table class="table tab-content table-hover">
+    		<table class="table tab-content table-hover  table-sm">
     			<thead class="table-hover table-info">
     				<tr>
     					<th>NOM ET PRENOM</th>
@@ -41,8 +41,6 @@
     			</thead>
     			<tbody>
     				@foreach ($caisse_caissiers as $caisse)
-
-
     				<tr>
     					<td>{{ $caisse->user->fullName }}</td>
                         <td>{{ $caisse->user->agence->name ?? "" }}</td>
@@ -83,7 +81,6 @@
                                 <a href="{{ route('caissier_info', $caisse->id ) }}" title="plus d'informations sur l'historique">
                                 <i class="fa fa-plus"></i>
                                 <i class="fa fa-info-circle" aria-hidden="true"></i>
-                                 
                             </a>
                             </div>
                             
@@ -92,8 +89,24 @@
                             {{ numberFormat($caisse->montant) }}
                         </td>
     					<td class="text-right">
+
                             @if($caisse->montant > 0) 
-    						<button class="btn-sm btn-info" wire:click="$emit('confirmValidation',{{$caisse->id}})">Validation</button>
+
+                             <button wire:click="showInput({{$caisse->id}})">Entrer</button>
+
+                            @if ($showInputData == $caisse->id )
+                                {{-- expr --}}
+                                <input type="number" wire:model="montantRemis" placeholder="Montant"/>
+
+                                @if ($montantRemis > 1000)
+                                    {{-- expr --}}
+                                    <button class="btn-sm btn-info" wire:click="$emit('confirmValidation',{{$caisse->id}})">Validation</button>
+                                @endif
+                                
+                            @endif
+
+                           
+    						
                             @endif
     					</td>
     				</tr>
