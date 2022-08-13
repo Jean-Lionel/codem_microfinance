@@ -37,6 +37,14 @@
 			</select>
 			{!! $errors->first('type_operation', '<small class="help-block invalid-feedback">:message</small>') !!}
 		</fieldset>
+
+		<fieldset class="form-group hide">
+			<label for="motif">MOTIF</label>
+			<input type="text" class="form-control {{$errors->has('motif') ? 'is-invalid' : 'is-valid' }}" id="motif" name="motif" value="{{ old('motif') ?? $operation->motif ? $operation->motif : ''}}">
+
+			{!! $errors->first('motif', '<small class="help-block invalid-feedback">:message</small>') !!}
+
+		</fieldset>
 		
 		
 	</div>
@@ -53,6 +61,14 @@
 			<label for="cni">CNI </label>
 			<input type="text" class="form-control {{$errors->has('cni') ? 'is-invalid' : 'is-valid' }}" id="cni"   name="cni" value="{{ old('cni') ?? $operation->cni }}">
 			{!! $errors->first('cni', '<small class="help-block invalid-feedback">:message</small>') !!}
+		</fieldset>
+
+		<fieldset class="form-group">
+			<label for="piece_number">NUMERO DE BORDEREAU</label>
+			<input type="text" class="form-control {{$errors->has('piece_number') ? 'is-invalid' : 'is-valid' }}" id="piece_number" name="piece_number" value="{{ old('piece_number') ?? $operation->piece_number ? $operation->piece_number : ''}}">
+
+			{!! $errors->first('piece_number', '<small class="help-block invalid-feedback">:message</small>') !!}
+
 		</fieldset>
 
 	</div>

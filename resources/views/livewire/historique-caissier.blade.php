@@ -11,6 +11,7 @@
                 <th>HEURE</th>
                 <th>TYPE D'OPERATION</th>
                 <th>MONTANT ( #FBU)</th>
+                <th>MONTANT RESTANT ( #FBU)</th>
             </tr>
             
         </thead>
@@ -23,6 +24,7 @@
                     <td>{{ $element->created_at->format('H:i:s') }}</td>
                     <td>{{ $element->type_operation == 'VIREMENT MATINAL' ? 'APPROVISIONEMENT' : 'MONTANT REMIS' }}</td>
                     <td class="text-left">{{ number_format($element->montant) }}</td>
+                    <td class="text-left">{{ number_format($element->montant_restant) }}</td>
                 </tr>
             @endforeach
         </tbody>

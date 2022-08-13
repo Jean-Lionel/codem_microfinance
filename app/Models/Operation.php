@@ -10,11 +10,11 @@ class Operation extends ParentModel
     //
 
     protected $fillable = ['compte_name','operer_par','montant','type_operation',
-    'user_id','cni'
+    'user_id','cni', 'motif','piece_number'
     ];
 
     public $sortable = ['compte_name','operer_par','montant','type_operation',
-    'user_id','cni','created_at'
+    'user_id','cni','created_at','motif','piece_number'
     ];
 
     public static function boot()
