@@ -8,7 +8,7 @@
 			<table class="table table-sm  table-striped table-info ">
 				<thead style="font-size: 0.6rem;">
 					<tr>
-						<th>DEPENSE</th>
+						{{-- <th>DEPENSE</th> --}}
 						<th>RETRAIT</th>
 						<th>VERSEMENT</th>
 						<th>PLACEMENT</th>
@@ -24,7 +24,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>{{number_format($depense)}}</td>
+						{{-- <td>{{number_format($depense)}}</td> --}}
 						<td>{{number_format($retrait)}}</td>
 						<td>{{number_format($versement)}}</td>
 						<td>{{number_format($placement)}}</td>
