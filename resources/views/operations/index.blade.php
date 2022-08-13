@@ -248,7 +248,9 @@
 		  		<section>
 		  		<p>
 		  		************************************************************ <br>
-		  		<span>${operation.type_operation} EN ESPECES BORDEREAU No :  ${operation.id} </span> <br>
+		  		<span>${operation.type_operation} EN ESPECES  No :  ${operation.id} </span> 
+		  		<br>
+		  		<span>NUMERO DE BORDEREAU : ${operation?.piece_number}</span>
 		  		*************************************************************
 		  		</p>
 
@@ -256,14 +258,17 @@
 		  		<p>
 		  		Compte No : ${operation.compte_name}
 		  		<br>
-		  		Verse par : ${operation.operer_par}
+		  		Versé par : ${operation.operer_par}
 		  		</p>
 
 		  		<p>
 
-		  		Montant Total : ${formatNumber(operation.montant)} <br>
+		  		Montant Total : <b>${formatNumber(operation.montant)} </b> <br>
 
 		  		<span> Soit :  <b>${NumberToLetter(operation.montant)} FBU </b></span>
+
+		  		<br>
+		  		Motif :  ${operation.motif}
 
 		  		</p>
 
