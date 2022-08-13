@@ -34,10 +34,9 @@
 						<th>No</th>
 						<th>@sortablelink('compte_name','COMPTE NO')</th>
 						<th>@sortablelink('montant','Montant') </th>
+						<th>@sortablelink('piece_number',"N° BORDEREAU") </th>
 						<th>@sortablelink('type_operation','Type d\' operation')</th>
 						<th>@sortablelink('created_at','Date') </th>
-
-
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -48,6 +47,7 @@
 						<td>{{$key + 1}}</td>
 						<td>{{ $operation->compte_name}}</td>
 						<td class="text-right" style="padding-right: 20px;" >{{ numberFormat($operation->montant)}}</td>
+						<td  >{{ $operation->piece_number}}</td>
 						<td>{{ $operation->type_operation}}</td>
 						<td>{{ dateFormat($operation->created_at)}}</td>
 						<td>
