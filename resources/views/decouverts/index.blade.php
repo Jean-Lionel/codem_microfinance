@@ -40,7 +40,7 @@
 
 	@if($decouverts)
 
-	<table class="table  table-hover table-striped table-responsive text-right table-bordered">
+	<table class="table  table-hover table-striped table-responsive-sm text-right table-bordered table-sm">
 		<thead>
 			<tr>
 
