@@ -125,6 +125,8 @@
 		$('#operer_par').val('')
 		// $('#type_operation').val('RETRAIT')
 		$('#cni').val('')
+		$('#motif').val('')
+		$('#piece_number').val('')
 		$('#compte_name').attr('disabled',false)
 
 		$('.hide').hide()
@@ -319,6 +321,8 @@
 			let operer_par = $('#operer_par').val()
 			let type_operation = $('#type_operation').val()
 			let cni = $('#cni').val()
+			let motif = $('#motif').val()
+			let piece_number = $('#piece_number').val()
 
 			if(montant <= 0 || isNaN(montant)){
 
@@ -360,6 +364,8 @@
 					operer_par,
 					type_operation,
 					cni,
+					motif,
+					piece_number
 					
 				},
 			})

@@ -9,6 +9,8 @@ class Operation extends ParentModel
 {
     //
 
+  //   "motif" => "ddddddddddd"
+  // "piece_number" => "dddddddddd"
     protected $fillable = ['compte_name','operer_par','montant','type_operation',
     'user_id','cni', 'motif','piece_number'
     ];
