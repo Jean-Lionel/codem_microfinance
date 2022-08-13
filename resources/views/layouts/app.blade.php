@@ -69,13 +69,15 @@
       <i class="fa fa-home"></i> {{ BASE_NAME }}</a></h5>
       <nav class="my-2 my-md-0 mr-md-3">
 
-         <a class="p-2  {{set_active_router('operations.index')}}" href="{{ route('operations.index') }}"><i class="fa fa-expand"></i> Operation</a>
+         <a class="p-2  {{set_active_router('operations.index')}}" href="{{ route('operations.index') }}"><i class="fa fa-expand"></i> Opération</a>
 
          @can('is-register-client')
 
          @cannot('is-admin')
 
          <a class="p-2  {{set_active_router('clients.index')}}" href="{{ route('clients.index') }}"><i class="fa fa-wheelchair-alt"></i> Client</a>
+         
+           <a class="p-2 {{set_active_router('comptes.index')}}" href="{{ route('comptes.index') }}"><i class="fa fa-book"></i> Situation</a>
 
          @endcannot
 
