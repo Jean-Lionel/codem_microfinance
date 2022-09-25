@@ -17,6 +17,7 @@ class CreateTenueComptesTable extends Migration
             $table->id();
             $table->decimal('montant',60,2)->dafault(0);
             $table->string('compte_name');
+            $table->foreignId('tenu_compteur_watche_id')->nullable();
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);
         });

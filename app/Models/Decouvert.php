@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 class Decouvert extends ParentModel
 {
     //
-
     protected $fillable = [
     'compte_name','montant','interet','total_a_rambourse','periode',
     'montant_payer','paye',
@@ -29,8 +28,6 @@ class Decouvert extends ParentModel
                 $model->user_id = Auth::user()->id;
             });
     }
-
-
     public function getClientNameAttribute(){
 
         $compte = Compte::where('name','=', $this->compte_name)->first();

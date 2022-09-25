@@ -258,7 +258,7 @@
 		  		<p>
 		  		Compte No : ${operation.compte_name}
 		  		<br>
-		  		Versé par : ${operation.operer_par}
+		  		Effectué par : ${operation.operer_par}
 		  		</p>
 
 		  		<p>
@@ -280,9 +280,9 @@
 		  		Caissier : ${user.first_name} ${user.last_name}
 		  		<div>
 
-		  		<span>Signature Caissier : </span> <br>
+		  		<span>Signature du Caissier : </span> <br>
 		  		<hr>
-		  		<span>Signature du deposant : </span>
+		  		<span>Signature du déposant : </span>
 		  		</div>
 		  		</footer>	
 

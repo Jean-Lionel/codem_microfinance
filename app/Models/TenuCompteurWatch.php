@@ -22,72 +22,79 @@ class TenuCompteurWatch extends Model
     
     public static function isAllReadyTaken() 
     {
-           
-        $created_at = TenuCompteurWatch::latest()->first()->created_at ?? 0;
+
+        $created_at = TenuCompteurWatch::latest()->first()->created_at ?? null;
         $created_at =  $created_at ? $created_at->format('Y-m') : null;
-        if( $created_at == now()->format('Y-m')){
+        if( str_contains( $created_at, now()->format('Y-m') )){
             return true;
         }else{
             return false;
         }
     }
 
-
     public static function tenueCompteMensuel(){
         // Pay More attention for this code 12/7/2022 a Rutovu chez Thierry
         // 
         if(!self::isAllReadyTaken()){
-        $comptes_soldes = Compte::where('montant', '<', TENU_COMPTE_MENSUELLE )->count();
-        $comptes = Compte::where('montant', '>=', TENU_COMPTE_MENSUELLE)->get();
+            $comptes_soldes = Compte::where('montant', '<', TENU_COMPTE_MENSUELLE )->count();
+            $comptes = Compte::where('montant', '>=', TENU_COMPTE_MENSUELLE)->get();
 
-        try {
-            DB::beginTransaction();
-            $tenuCompte = [];
-            foreach($comptes as $compte){
-                $compte->montant -= TENU_COMPTE_MENSUELLE;
-                $compte->save();
-                $tenuCompte[] = [
-                    'compte_name' => $compte->name,
-                    'montant' => TENU_COMPTE_MENSUELLE,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ];
+            try {
+                DB::beginTransaction();
+                $timeWach = time(); 
+                $tenuCompte = [];
+                foreach($comptes as $compte){
+                    $temp = TenueCompte::where('compte_name', $compte->name)
+                    ->where('created_at', 'LIKE', now()->format('Y-m').'%')->first();
+
+                    if(!$temp){
+                     $compte->montant -= TENU_COMPTE_MENSUELLE;
+                     $compte->save();
+                     $tenuCompte[] = [
+                        'compte_name' => $compte->name,
+                        'montant' => TENU_COMPTE_MENSUELLE,
+                        'tenu_compteur_watche_id' => $timeWach,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+
+                }
+
             }
-            $x_element = array_chunk($tenuCompte, 1000);
-
+            $x_element = array_chunk($tenuCompte, 10000);
             foreach ($x_element as  $value) {
-                // code...
-                 TenueCompte::insert($value);
-            }
-           
-            $montant_total = $comptes->count() *  TENU_COMPTE_MENSUELLE;
+             TenueCompte::insert($value);
+         }
+         
+         $montant_total = count($tenuCompte) *  TENU_COMPTE_MENSUELLE;
+         ComptePrincipalOperationController::storeOperation($montant_total,'tenue_compte',"COMPTE PRINCIPAL");
+         ComptePrincipalController::store_info($montant_total, 'ADD');
 
-            ComptePrincipalOperationController::storeOperation($montant_total,'tenue_compte',"COMPTE PRINCIPAL");
-            ComptePrincipalController::store_info($montant_total, 'ADD');
+         TenuCompteurWatch::create([
+            "montant" => $montant_total,
+            "status"  => "SUCCESS",
+            "comptes_error" => $comptes_soldes ,
+            "comptes_success" => $comptes->count(),
+            "tenu_compteur_watche_id" => $timeWach
+        ]);
 
-            TenuCompteurWatch::create([
-                    "montant" => $montant_total,
-                    "status"  => "SUCCESS",
-                    "comptes_error" => $comptes_soldes ,
-                    "comptes_success" => $comptes->count(),
-            ]);
+         DB::commit();
 
-            DB::commit();
-            
-        } catch (\Exception $e) {
-            dump($e->getMessage());
-            DB::rollback();
-        }
+     } catch (\Exception $e) {
+        
+        DB::rollback();
+        dump($e->getMessage());
+    }
 
         //dd("Finish");
 
-        }else{
+}else{
 
             //dump("Orleady Taken ");
 
-        }
+}
 
-    }
+}
 
 
 
@@ -100,7 +107,7 @@ class TenuCompteurWatch extends Model
 
     //         $montant_total = $all_compte->count() * TENU_COMPTE_MENSUELLE; 
     //         //MONTANT TOTAL DU TENU DE COMPTE
-            
+
     //        try {
     //         DB::beginTransaction();
     //         foreach ($all_compte as $key => $compte) {
@@ -114,13 +121,13 @@ class TenuCompteurWatch extends Model
     //             'montant' => TENU_COMPTE_MENSUELLE,
     //            ]);
     //         }
-             
+
     //         ComptePrincipalOperationController::storeOperation($montant_total,'tenue_compte',"COMPTE PRINCIPAL");
     //         ComptePrincipalController::store_info($montant_total, 'ADD');
 
     //         if(self::isAllReadyTaken()){
     //             throw new \Exception("Opération a été déjà realisé par quelque d'autre", 1);
-                
+
     //         }
     //         TenuCompteurWatch::create([
     //                 "montant" => $montant_total,
@@ -136,7 +143,7 @@ class TenuCompteurWatch extends Model
     //        }
 
     //     }else{
-            
+
     //     }
     // }
 

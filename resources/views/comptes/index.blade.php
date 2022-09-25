@@ -82,9 +82,6 @@
 			if(data){
 				showPrintButton(true)
 			}
-			
-			
-			
 			let table_generate =  generateEmployeHistory(data)
 
 			$('.table_info').html(table_generate)
@@ -104,16 +101,12 @@
 
 	function generateEmployeHistory(data){
 
-	
 		const operations = data.operations;
 		const paiement_placement = data.paiement_placement ;
 		const tenus_comptes = data.tenus_comptes;
 		const client = data.client;
-
 		const compte_name = data.compte_name;
 		
-
-
 		let table_paiement_placement = '';
 		let table_operation =''
 		let table_tenus_comptes = ''

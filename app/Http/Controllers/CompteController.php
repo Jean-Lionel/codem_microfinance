@@ -161,7 +161,7 @@ class CompteController extends Controller
         $compte_name = \Request::get('compte_name');
         $date_val = \Request::get('date_val');
         $compte = Compte::where('name','=',$compte_name)->first();
-
+        
         if(!$compte)
             return response()->json(['error'=>'Invalide compte name']);
 
