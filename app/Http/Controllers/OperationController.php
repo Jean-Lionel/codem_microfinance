@@ -250,8 +250,6 @@ if($compte){
             $type_operation = $operation->type_operation;
 
             if($type_operation == 'VERSEMENT'){
-
-            
                  if($user->caisse->montant < $operation->montant)
                     throw new \Exception("L'annulation de cette opération est impossible car le montant est insuffisant sur son compte",2);
                 //On enleve le montant sur son compte
@@ -281,6 +279,13 @@ if($compte){
                $compte->save();
 
 
+           }
+
+           // to do Annuler une Opération de virement
+
+           if($type_operation != 'RETRAIT' || $type_operation == 'VERSEMENT' ){
+
+            throw new \Exception("Opération echoué");
            }
 
            successMessage();
