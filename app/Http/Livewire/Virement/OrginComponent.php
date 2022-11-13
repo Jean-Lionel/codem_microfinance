@@ -19,6 +19,7 @@ class OrginComponent extends Component
     public $validateCompteDestination;
     public $motif;
     public $errorMessage;
+    public $succeesMessage;
 
 
     public function mount()
@@ -60,80 +61,91 @@ class OrginComponent extends Component
         
         $montant = floatval($this->montant);
         if($montant <=0){
-         $msg =  "Le montant doit être supérieur à 0";
+           $msg =  "Le montant doit être supérieur à 0";
+       }
+       if(!$this->destinationCompte->name) {
+           $msg = "Vérfier vos numéro de compte du bénéficiaire";
+       }
+       if(!$this->compte->name) {
+         $msg = "Vérfier vos numéro de compte du debuteur";
      }
-     if(!$this->destinationCompte->name) {
-         $msg = "Vérfier vos numéro de compte du bénéficiaire";
-     }
-     if(!$this->compte->name) {
-       $msg = "Vérfier vos numéro de compte du debuteur";
-   }
-   if($this->compte->name == $this->destinationCompte->name){
-    $msg = "Opération impossible sur le même compte " . $this->destinationCompte->name;
-}
+     if($this->compte->name == $this->destinationCompte->name){
+        $msg = "Opération impossible sur le même compte " . $this->destinationCompte->name;
+    }
 
-if($this->compte->montant < $montant){
-    $msg = "Solde insufisant sur le compte ". $this->compte->name;
-}
+    if( $montant > $this->compte->montant ){
+        $msg = "Solde insufisant sur le compte ". $this->compte->name;
+    }
 
-$user = auth()->user();
+    $user = auth()->user();
 
 
-if($user->roles()->count() == 0){
-    $msg = "Vous n'avez pas d'autorisation ";
-}
+    if($user->roles()->count() == 0){
+        $msg = "Vous n'avez pas d'autorisation ";
+    }
 
-if($msg != ""){
-  try {
-    DB::begintransaction();
-   
 
-    $piece_number = time();
 
-    $debuteur = Operation::create([
-        'compte_name' => $this->compte->name,
-        'operer_par' => auth()->user()->name,
-        'montant' => $montant,
-        'type_operation' => "TRANSFERT PAR VIREMENT",
-        'user_id' => auth()->user()->id,
-        'cni' => "", 
-        'motif' => $this->motif . " [ TRANSFERT PAR VIREMENT D'UNE SOMME DE (" .$montant." #Fbu ) PROVENANT DU COMPTE NUMERO ".$this->destinationCompte->name. " DE ".  $this->destinationCompte->client->fullName . " ]",
-        'piece_number' => $piece_number
-    ]);
-    $recepteur = Operation::create([
-        'compte_name' => $this->destinationCompte->name,
-        'operer_par' => auth()->user()->name,
-        'montant' => $montant,
-        'type_operation' => "RECEPTION PAR VIREMENT",
-        'user_id' => auth()->user()->id,
-        'cni' => "", 
-        'motif' => $this->motif . "[ RECEPTION PAR VIREMENT D'UNE SOMME DE (" .$montant." #Fbu ) PROVENANT DU COMPTE NUMERO ".$this->compte->name. " DE ".  $this->compte->client->fullName . " ]",
-        'piece_number' => $piece_number
-    ]);
+    if($msg == ""){
+      try {
+        DB::begintransaction();
+        $piece_number = time();
 
-    VirementHistory::create([
-        'compte_debuteur' => $this->compte->name,
-        'compte_beneficiary' => $this->destinationCompte->name,
-        'montant' => $montant,
-        'user_id' => auth()->user()->id,
-        'motif' => $this->motif,
-        'operation_debuteur_id' =>  $debuteur->id,
-        'operation_recepteur_id' =>  $recepteur->id,
-    ]);
+        $debuteur = Operation::create([
+            'compte_name' => $this->compte->name,
+            'operer_par' => auth()->user()->name,
+            'montant' => $montant,
+            'type_operation' => "TRANSFERT PAR VIREMENT",
+            'user_id' => auth()->user()->id,
+            'cni' => "", 
+            'motif' => $this->motif . " [ TRANSFERT PAR VIREMENT D'UNE SOMME DE (" .$montant." #Fbu ) PROVENANT DU COMPTE NUMERO ".$this->destinationCompte->name. " DE ".  $this->destinationCompte->client->fullName . " ]",
+            'piece_number' => $piece_number
+        ]);
+        $recepteur = Operation::create([
+            'compte_name' => $this->destinationCompte->name,
+            'operer_par' => auth()->user()->name,
+            'montant' => $montant,
+            'type_operation' => "RECEPTION PAR VIREMENT",
+            'user_id' => auth()->user()->id,
+            'cni' => "", 
+            'motif' => $this->motif . "[ RECEPTION PAR VIREMENT D'UNE SOMME DE (" .$montant." #Fbu ) PROVENANT DU COMPTE NUMERO ".$this->compte->name. " DE ".  $this->compte->client->fullName . " ]",
+            'piece_number' => $piece_number
+        ]);
 
-    $this->compte->montant -= $montant;
-    $this->destinationCompte->montant += $montant;
-    $this->compte->save();
-    $this->destinationCompte->save();
-    DB::commit();
+        VirementHistory::create([
+            'compte_debuteur' => $this->compte->name,
+            'compte_beneficiary' => $this->destinationCompte->name,
+            'montant' => $montant,
+            'user_id' => auth()->user()->id,
+            'motif' => $this->motif,
+            'operation_debuteur_id' =>  $debuteur->id,
+            'operation_recepteur_id' =>  $recepteur->id,
+        ]);
 
-    $this->resetInput();
+        if($montant > $this->compte->montant){
+            throw new \Exception("oops !!!! Erreur Solde insufisant sur le compte ".$this->compte->name);
+        }else{
+           $this->compte->montant -= $montant;
+           $this->destinationCompte->montant += $montant;
+           $this->compte->save();
+           $this->destinationCompte->save();
 
-} catch (\Exception $e) {
-  $msg = $e->getMessage();
-  DB::rollback();
-}
+       }
 
+       $this->succeesMessage = "Opération du compte ".$this->compte->name.
+       " Vers -----> ".$this->destinationCompte->name . " de ". $montant. " FBU réussi";
+       $this->resetInput();
+
+       DB::commit();
+
+
+   } catch (\Exception $e) {
+      $msg = $e->getMessage();
+      DB::rollback();
+  }
+
+}else{
+    $this->succeesMessage = "";
 }
 
 $this->errorMessage = $msg;
@@ -142,8 +154,10 @@ $this->errorMessage = $msg;
 
 
 private function resetInput(){
+    
     $this->destinationCompte = null;
     $this->validateCompteDestination = null;
+    $this->errorMessage = "";
 
 }
 

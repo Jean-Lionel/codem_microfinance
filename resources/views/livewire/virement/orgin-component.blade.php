@@ -68,6 +68,15 @@
     </div>
 
     <div>
+         @if ($errorMessage)
+        {{-- expr --}}
+        <p class="error  bg-danger  text-center text-white">{{$errorMessage}}</p>
+    @endif
+    @if ($succeesMessage)
+        {{-- expr --}}
+        <p class="succes  bg-success  text-center text-white">{{$succeesMessage}}</p>
+    @endif
+    
         <table class="table tab-content">
 
             <tr>
@@ -107,10 +116,7 @@
     </tr>
     @else
 
-    @if ($errorMessage)
-        {{-- expr --}}
-        <p class="error  bg-danger  text-center text-white">{{$errorMessage}}</p>
-    @endif
+   
 
     <tr>
         <td>Motif</td>
