@@ -26,7 +26,7 @@
 			</div>
 
 			<ul class="list-group list-group-flush">
-				<li class="list-group-item"><b>COMPTE NO : </b>  COPDI {{ $compte[0]['id']}} </li>
+				<li class="list-group-item"><b>COMPTE NO : </b>   {{ $compte[0]['id']}} </li>
 				<li class="list-group-item"><b>Montant   :</b> <h5>{{ $compte[0]['montant'] }} FBU</h5></li>
 				<li class="list-group-item"></li>
 				
