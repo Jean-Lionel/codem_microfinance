@@ -69,28 +69,60 @@
 
     <div>
         <table class="table tab-content">
-            <thead>
-                <tr>
-                    <th>Numéro de compte</th>
-                    <th>Nom et prénom</th>
-                    <th>CNI</th>
-                    <th>Montant</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
 
-            <tbody>
-                <tr>
-                    <td>
-                       <input type="text" wire:model="destinationCompte"
-                       wire:keydown.enter="selectAcount" >
-                       <button wire:click="selectAcount">Ok</button>
-                    </td>
-                </tr> 
-            </tbody>
-        </table>
-    </div>
+            <tr>
+                <th>Numéro de compte</th>
+                <td>
+                   <input type="text" wire:model="destinationCompteName"
+                   wire:keydown.enter="selectAcount" class="form-control form-control-sm">
+               </td>
+               <td> <button wire:click="selectAcount" class="btn btn-info btn-block btn-sm">Ok</button></td>
+
+           </tr> 
+           @if ($destinationCompte)
+           {{-- expr --}}
+           <tr>
+               <th colspan="2" class="text-center">Information du compte destinateur</th>
+           </tr>
+           <tr>
+            <th>Numéro de Compte</th>
+            <td>{{$destinationCompte->name }}</td>
+        </tr> 
+        <tr>
+            <th>Nom et prénom</th>
+            <td>{{$destinationCompte->client->fullName }}</td>
+        </tr>
+        <tr>
+           <th>CNI</th>
+           <td>{{$destinationCompte->client->cni }}</td>
+       </tr> 
+       <tr>
+           <th>Date de Naissance</th>
+           <td>{{$destinationCompte->client->date_naissance }}</td>
+       </tr>
+       @if (!$validateCompteDestination)
+       {{-- expr --}}
+       <tr>
+        <td><button wire:click="validateCompteDestinationInformation">Valider</button></td>
+    </tr>
+    @else
+    <tr>
+        <th>Montant</th>
+        <td>
+            <input type="number">
+        </td>
+        <td>
+            <button>Virement</button>
+        </td>
+    </tr>
     @endif
+    @endif
+
+
+
+</table>
+</div>
+@endif
 </div>
 
 </div>

@@ -21,7 +21,7 @@ class Compte extends ParentModel
     	return self::where('name','=', $name)->first();
     }
 
-    public function getCompte($name){
+    public static function getCompte($name){
         $c = Compte::where('name', 'like', '%'.$name)->first();
 
         return $c;

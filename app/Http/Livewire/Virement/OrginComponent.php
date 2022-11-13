@@ -10,7 +10,9 @@ class OrginComponent extends Component
     public $compteName;
     public $compte;
     public $validate=false;
+    public $destinationCompteName;
     public $destinationCompte;
+    public $validateCompteDestination;
 
 
     public function mount()
@@ -25,9 +27,7 @@ class OrginComponent extends Component
     }
 
     public function searchAcount(){
-
-        
-        $this->compte = $c;
+        $this->compte = Compte::getCompte($this->compteName);
         $this->validate = false;
     }
 
@@ -35,9 +35,14 @@ class OrginComponent extends Component
         $this->validate = true;
     }
 
+    public function validateCompteDestinationInformation(){
+        $this->validateCompteDestination = true;
+    }
+
     public function selectAcount(){
 
-        dd($this->destinationCompte);
+        $this->destinationCompte = Compte::getCompte($this->destinationCompteName);
+        $this->validateCompteDestination = false;
     }
 
     
