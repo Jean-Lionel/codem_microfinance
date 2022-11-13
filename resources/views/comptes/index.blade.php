@@ -111,12 +111,13 @@
 		let table_operation =''
 		let table_tenus_comptes = ''
 
-		table_operation = `<table class="table table-bordered"> 
+		table_operation = `<table class="table table-bordered table-sm"> 
 		<tr>
 		<th> Date </th>
 		<th> TYPE D'OPERATION </th>
 		<th> MONTANT </th>
 		<th> OPERER PAR </th>
+		<th> Motif </th>
 		</tr>
 
 		`;
@@ -129,6 +130,7 @@
 			<td>${operations[i].type_operation}</td>
 			<td>${_formatNumber(operations[i].montant)}</td>
 			<td>${operations[i].operer_par}</td>
+			<td><small>${operations[i].motif} </small></td>
 
 			</tr>`
 
