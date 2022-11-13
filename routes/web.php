@@ -13,6 +13,8 @@ use App\Http\Controllers\SettingController;
 |
 */
 
+Auth::routes(['register' => false]);
+
 //Route::permanentRedirect('/', '/home');
 Route::get('/','DashboardController@index');
 Route::resource('clients','ClientController');
@@ -54,13 +56,13 @@ Route::get('operation_details', 'OperationController@operation_details')->name('
 Route::resource('posts', 'PostController');
 //Route pour le placement
 Route::resource('placement-client','PlacementClientController');
-//IKIRIMBA PROJECT 
+//IKIRIMBA PROJECT
 Route::get('ikirimba-membre', 'KirimbaMembreController@index')->name('ikirimba-membre');
 Route::get('ikirimba-operation', 'KirimbaOperationController@index')->name('ikirimba-operation');
 Route::get('ikirimba-rapport', 'KirimbaRapportController@index')->name('ikirimba-rapport');
 Route::get('ikirimba-history', 'KirimbaRapportController@history')->name('ikirimba-history');
 Route::get('kirimba-rapport-dette', 'KirimbaRapportController@rapportKirimba')->name('kirimba-rapport-dette');
-//GESTION DES AGANCES  
+//GESTION DES AGANCES
 Route::get('agences', 'AgenceController@index')->name("agences");
 Route::get('gestion-agence', 'AgenceController@gestion')->name("gestion-agence");
 Route::get("caissier",'AgenceController@caissier')->name("caissier");
@@ -68,6 +70,6 @@ Route::get("caissier_info/{id}",'AgenceController@historique')->name("caissier_i
 
 Route::get("recrouvement",'DecouvertController@recrouvement')->name("recrouvement");
 
-// Route for CODEM 
+// Route for CODEM
 Route::get('settings', [SettingController::class, 'index'])->name('settings');
 Route::get('status-onlines', [UserController::class, 'userOnlineStatus']);

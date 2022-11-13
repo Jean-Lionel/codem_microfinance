@@ -3,9 +3,7 @@
 @section('content')
 
 <div class="row">
-	<div class="col-md-1 col-sm-12 badge-dark">
-		<p><a href="{{ route('operations.create')}}" class="text-lg-center white-color">Nouvelle opération</a></p>
-	</div>
+	@include('operations.side')
 	<div class="col-md-10 col-sm-12">
 		<div class="row">
 			<div class="col-md-8">
@@ -258,7 +256,8 @@
 		  		<p>
 		  		Compte No : ${operation.compte_name}
 		  		<br>
-		  		Effectué par : ${operation.operer_par}
+		  		${operation.type_operation == 'RETRAIT ' ? 'Retiré ' : 'Versé ' }
+		  		 par : ${operation.operer_par}
 		  		</p>
 
 		  		<p>
@@ -277,7 +276,7 @@
 		  		<footer>
 
 		  		Agence : ${data.agence_name.toUpperCase() || 'KINAMA'} <br>
-		  		Caissier : ${user.first_name} ${user.last_name}
+		  		Effectué par : ${user.first_name} ${user.last_name}
 		  		<div>
 
 		  		<span>Signature du Caissier : </span> <br>

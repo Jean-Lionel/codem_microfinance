@@ -6,3 +6,6 @@ DELETE FROM tenue_comptes WHERE id IN (
 SELECT   MAX(id) as id
 FROM     tenue_comptes WHERE created_at LIKE '2022-09-01%'
 GROUP BY `montant`,`compte_name`    HAVING COUNT(*) > 1)
+
+
+SELECT * from operations where compte_name like 
