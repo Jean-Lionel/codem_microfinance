@@ -348,4 +348,8 @@ if($compte){
     {
         //
     }
+
+    public function virement(){
+        return view("operations.virement");
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\OperationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,3 +74,4 @@ Route::get("recrouvement",'DecouvertController@recrouvement')->name("recrouvemen
 // Route for CODEM
 Route::get('settings', [SettingController::class, 'index'])->name('settings');
 Route::get('status-onlines', [UserController::class, 'userOnlineStatus']);
+Route::get('virement', [OperationController::class, 'virement'])->name("virement");
