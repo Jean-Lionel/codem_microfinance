@@ -9,6 +9,7 @@ class OrginComponent extends Component
 {
     public $compteName;
     public $compte;
+    public $montant;
     public $validate=false;
     public $destinationCompteName;
     public $destinationCompte;
@@ -43,6 +44,13 @@ class OrginComponent extends Component
 
         $this->destinationCompte = Compte::getCompte($this->destinationCompteName);
         $this->validateCompteDestination = false;
+    }
+
+    public function saveOperation(){
+        dd($this->montant);
+        // Check if compte orgin contain this Montant
+        // Validate exists compte
+        // Get User
     }
 
     

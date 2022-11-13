@@ -109,10 +109,10 @@
     <tr>
         <th>Montant</th>
         <td>
-            <input type="number">
+            <input type="number" wire:model="montant">
         </td>
         <td>
-            <button>Virement</button>
+            <button wire:click="saveOperation">Virement</button>
         </td>
     </tr>
     @endif
