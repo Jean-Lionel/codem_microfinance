@@ -111,6 +111,11 @@
         {{-- expr --}}
         <p class="error  bg-danger  text-center text-white">{{$errorMessage}}</p>
     @endif
+
+    <tr>
+        <td>Motif</td>
+        <td><input type="text" class="form-control form-control-sm" wire:model="motif"></td>
+    </tr>
     <tr>
         <th>Montant</th>
         <td>

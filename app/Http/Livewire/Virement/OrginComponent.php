@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Virement;
 use App\Models\Compte;
 use Livewire\Component;
 use App\Models\Operation;
+use App\Models\VirementHistory;
 use Illuminate\Support\Facades\DB;
 
 class OrginComponent extends Component
@@ -16,6 +17,7 @@ class OrginComponent extends Component
     public $destinationCompteName;
     public $destinationCompte;
     public $validateCompteDestination;
+    public $motif;
     public $errorMessage;
 
 
@@ -87,25 +89,35 @@ if($msg != ""){
     $this->compte->montant -= $montant;
     $this->destinationCompte->montant += $montant;
 
+    $piece_number = time();
+
     Operation::create([
-        'compte_name',
-        'operer_par',
-        'montant',
-        'type_operation',
-        'user_id',
-        'cni', 
-        'motif' => ,
-        'piece_number' => ""
+        'compte_name' => $this->compte->name,
+        'operer_par' => auth()->user()->name,
+        'montant' => $montant,
+        'type_operation' => "TRANSFERT PAR VIREMENT",
+        'user_id' => auth()->user()->id,
+        'cni' => "", 
+        'motif' => "TRANSFERT PAR VIREMENT D'UNE SOMME DE (" .$montant." #Fbu ) PROVENANT DU COMPTE NUMERO ".$this->destinationCompte->name. " DE ".  $this->destinationCompte->client->fullName,
+        'piece_number' => $piece_number
     ]);
     Operation::create([
-        'compte_name',
-        'operer_par',
-        'montant',
-        'type_operation',
-        'user_id',
-        'cni', 
-        'motif' => ,
-        'piece_number' => ""
+        'compte_name' => $this->destinationCompte->name,
+        'operer_par' => auth()->user()->name,
+        'montant' => $montant,
+        'type_operation' => "RECEPTION PAR VIREMENT",
+        'user_id' => auth()->user()->id,
+        'cni' => "", 
+        'motif' => "RECEPTION PAR VIREMENT D'UNE SOMME DE (" .$montant." #Fbu ) PROVENANT DU COMPTE NUMERO ".$this->compte->name. " DE ".  $this->compte->client->fullName ,
+        'piece_number' => $piece_number
+    ]);
+
+    VirementHistory::create([
+        'compte_debuteur' => 
+compte_beneficiary
+montant
+user_id
+motif
     ]);
 
     $this->compte->save();
