@@ -86,8 +86,7 @@ if($user->roles()->count() == 0){
 if($msg != ""){
   try {
     DB::begintransaction();
-    $this->compte->montant -= $montant;
-    $this->destinationCompte->montant += $montant;
+   
 
     $piece_number = time();
 
@@ -98,7 +97,7 @@ if($msg != ""){
         'type_operation' => "TRANSFERT PAR VIREMENT",
         'user_id' => auth()->user()->id,
         'cni' => "", 
-        'motif' => "TRANSFERT PAR VIREMENT D'UNE SOMME DE (" .$montant." #Fbu ) PROVENANT DU COMPTE NUMERO ".$this->destinationCompte->name. " DE ".  $this->destinationCompte->client->fullName,
+        'motif' => $this->motif . " [ TRANSFERT PAR VIREMENT D'UNE SOMME DE (" .$montant." #Fbu ) PROVENANT DU COMPTE NUMERO ".$this->destinationCompte->name. " DE ".  $this->destinationCompte->client->fullName . " ]",
         'piece_number' => $piece_number
     ]);
     $recepteur = Operation::create([
@@ -108,7 +107,7 @@ if($msg != ""){
         'type_operation' => "RECEPTION PAR VIREMENT",
         'user_id' => auth()->user()->id,
         'cni' => "", 
-        'motif' => "RECEPTION PAR VIREMENT D'UNE SOMME DE (" .$montant." #Fbu ) PROVENANT DU COMPTE NUMERO ".$this->compte->name. " DE ".  $this->compte->client->fullName ,
+        'motif' => $this->motif . "[ RECEPTION PAR VIREMENT D'UNE SOMME DE (" .$montant." #Fbu ) PROVENANT DU COMPTE NUMERO ".$this->compte->name. " DE ".  $this->compte->client->fullName . " ]",
         'piece_number' => $piece_number
     ]);
 
@@ -117,14 +116,18 @@ if($msg != ""){
         'compte_beneficiary' => $this->destinationCompte->name,
         'montant' => $montant,
         'user_id' => auth()->user()->id,
-        'motif' => "",
+        'motif' => $this->motif,
         'operation_debuteur_id' =>  $debuteur->id,
         'operation_recepteur_id' =>  $recepteur->id,
     ]);
 
+    $this->compte->montant -= $montant;
+    $this->destinationCompte->montant += $montant;
     $this->compte->save();
     $this->destinationCompte->save();
     DB::commit();
+
+    $this->resetInput();
 
 } catch (\Exception $e) {
   $msg = $e->getMessage();
@@ -134,6 +137,13 @@ if($msg != ""){
 }
 
 $this->errorMessage = $msg;
+
+}
+
+
+private function resetInput(){
+    $this->destinationCompte = null;
+    $this->validateCompteDestination = null;
 
 }
 
