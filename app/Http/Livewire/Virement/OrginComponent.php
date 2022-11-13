@@ -91,7 +91,7 @@ if($msg != ""){
 
     $piece_number = time();
 
-    Operation::create([
+    $debuteur = Operation::create([
         'compte_name' => $this->compte->name,
         'operer_par' => auth()->user()->name,
         'montant' => $montant,
@@ -101,7 +101,7 @@ if($msg != ""){
         'motif' => "TRANSFERT PAR VIREMENT D'UNE SOMME DE (" .$montant." #Fbu ) PROVENANT DU COMPTE NUMERO ".$this->destinationCompte->name. " DE ".  $this->destinationCompte->client->fullName,
         'piece_number' => $piece_number
     ]);
-    Operation::create([
+    $recepteur = Operation::create([
         'compte_name' => $this->destinationCompte->name,
         'operer_par' => auth()->user()->name,
         'montant' => $montant,
@@ -113,11 +113,13 @@ if($msg != ""){
     ]);
 
     VirementHistory::create([
-        'compte_debuteur' => 
-compte_beneficiary
-montant
-user_id
-motif
+        'compte_debuteur' => $this->compte->name,
+        'compte_beneficiary' => $this->destinationCompte->name,
+        'montant' => $montant,
+        'user_id' => auth()->user()->id,
+        'motif' => "",
+        'operation_debuteur_id' =>  $debuteur->id,
+        'operation_recepteur_id' =>  $recepteur->id,
     ]);
 
     $this->compte->save();

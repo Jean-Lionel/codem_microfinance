@@ -17,6 +17,8 @@ class CreateVirementHistoriesTable extends Migration
             $table->id();
             $table->string("compte_debuteur");
             $table->string("compte_beneficiary");
+            $table->foreignId("operation_debuteur_id");
+            $table->foreignId("operation_recepteur_id");
             $table->double("montant", 64,2);
             $table->foreignId("user_id");
             $table->text("motif")->nullable();
