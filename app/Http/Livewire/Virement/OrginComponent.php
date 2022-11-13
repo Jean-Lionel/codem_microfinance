@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Virement;
 
 use App\Models\Compte;
 use Livewire\Component;
+use App\Models\Operation;
 use Illuminate\Support\Facades\DB;
 
 class OrginComponent extends Component
@@ -57,48 +58,68 @@ class OrginComponent extends Component
         
         $montant = floatval($this->montant);
         if($montant <=0){
-           $msg =  "Le montant doit être supérieur à 0";
-         }
-        if(!$this->destinationCompte->name) {
-           $msg = "Vérfier vos numéro de compte du bénéficiaire";
-        }
-        if(!$this->compte->name) {
-         $msg = "Vérfier vos numéro de compte du debuteur";
-         }
-        if($this->compte->name == $this->destinationCompte->name){
-        $msg = "Opération impossible sur le même compte " . $this->destinationCompte->name;
-        }
+         $msg =  "Le montant doit être supérieur à 0";
+     }
+     if(!$this->destinationCompte->name) {
+         $msg = "Vérfier vos numéro de compte du bénéficiaire";
+     }
+     if(!$this->compte->name) {
+       $msg = "Vérfier vos numéro de compte du debuteur";
+   }
+   if($this->compte->name == $this->destinationCompte->name){
+    $msg = "Opération impossible sur le même compte " . $this->destinationCompte->name;
+}
 
-        if($this->compte->montant < $montant){
-        $msg = "Solde insufisant sur le compte ". $this->compte->name;
-        }
+if($this->compte->montant < $montant){
+    $msg = "Solde insufisant sur le compte ". $this->compte->name;
+}
 
-        $user = auth()->user();
-
-
-        if($user->roles()->count() == 0){
-            $msg = "Vous n'avez pas d'autorisation ";
-        }
-
-        if($msg != ""){
-          try {
-            DB::begintransaction();
-             $this->compte->montant -= $montant;
-             $this->destinationCompte->montant += $montant;
+$user = auth()->user();
 
 
-             $this->compte->save();
-             $this->destinationCompte->save();
-            DB::commit();
-              
-          } catch (\Exception $e) {
-              $msg = $e->getMessage();
-              DB::rollback();
-          }
+if($user->roles()->count() == 0){
+    $msg = "Vous n'avez pas d'autorisation ";
+}
 
-        }
+if($msg != ""){
+  try {
+    DB::begintransaction();
+    $this->compte->montant -= $montant;
+    $this->destinationCompte->montant += $montant;
 
-        $this->errorMessage = $msg;
+    Operation::create([
+        'compte_name',
+        'operer_par',
+        'montant',
+        'type_operation',
+        'user_id',
+        'cni', 
+        'motif' => ,
+        'piece_number' => ""
+    ]);
+    Operation::create([
+        'compte_name',
+        'operer_par',
+        'montant',
+        'type_operation',
+        'user_id',
+        'cni', 
+        'motif' => ,
+        'piece_number' => ""
+    ]);
+
+    $this->compte->save();
+    $this->destinationCompte->save();
+    DB::commit();
+
+} catch (\Exception $e) {
+  $msg = $e->getMessage();
+  DB::rollback();
+}
+
+}
+
+$this->errorMessage = $msg;
 
 }
 
