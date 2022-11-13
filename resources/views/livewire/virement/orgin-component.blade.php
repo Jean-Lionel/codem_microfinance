@@ -17,7 +17,7 @@
        {{-- expr --}}
        <div class="card">
         <div class="card-header">
-            <h5 class="card-title text-center">INFORMATION DU COMPTE D'ORGINE</h5>
+            <h5 class="card-title text-center">INFORMATION DU COMPTE DÉBITEUR</h5>
             <div class="d-flex justify-content-between">
                 <p>Numéro de compte :</p>
                 <h5>{{$compte->name}}</h5>
@@ -71,7 +71,7 @@
         <table class="table tab-content">
 
             <tr>
-                <th>Numéro de compte</th>
+                <th>Numéro de compte  </th>
                 <td>
                    <input type="text" wire:model="destinationCompteName"
                    wire:keydown.enter="selectAcount" class="form-control form-control-sm">
@@ -82,7 +82,7 @@
            @if ($destinationCompte)
            {{-- expr --}}
            <tr>
-               <th colspan="2" class="text-center">Information du compte destinateur</th>
+               <th colspan="2" class="text-center">Information du compte bénéficiaire.</th>
            </tr>
            <tr>
             <th>Numéro de Compte</th>
