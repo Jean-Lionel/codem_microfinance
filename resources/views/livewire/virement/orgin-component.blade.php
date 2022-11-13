@@ -31,7 +31,7 @@
                 </div>
                 <div class="d-flex justify-content-between">
                     <p>DATE DE NAISSANCE :</p>
-                    <h5>{{$compte->client->date_naissance}}</h5>
+                    <h5>{{dateFormat($compte->client->date_naissance)}}</h5>
                 </div>
                 <div class="d-flex justify-content-between">
                     <p>Solde :</p>
@@ -39,7 +39,7 @@
                 </div>
 
                 <div>
-                    <button>Valider</button>
+                    <button wire:click="validerInformation">Valider</button>
                 </div>
                 <div>
                     <img src="{{asset('img/client_images'.$compte->client->image)}}" alt="">

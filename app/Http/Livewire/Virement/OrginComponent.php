@@ -9,6 +9,7 @@ class OrginComponent extends Component
 {
     public $compteName;
     public $compte;
+    public $validate=false;
 
     public function render()
     {
@@ -19,5 +20,10 @@ class OrginComponent extends Component
 
         $c = Compte::where('name', 'like', '%'.$this->compteName)->first();
         $this->compte = $c;
+        $this->validate = false;
+    }
+
+    public function validerInformation(){
+        $this->validate = true;
     }
 }
