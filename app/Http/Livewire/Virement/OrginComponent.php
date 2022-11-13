@@ -10,6 +10,14 @@ class OrginComponent extends Component
     public $compteName;
     public $compte;
     public $validate=false;
+    public $destinationCompte;
+
+
+    public function mount()
+    {
+        $this->inputs = ['email' => ''];
+       
+    }
 
     public function render()
     {
@@ -18,7 +26,7 @@ class OrginComponent extends Component
 
     public function searchAcount(){
 
-        $c = Compte::where('name', 'like', '%'.$this->compteName)->first();
+        
         $this->compte = $c;
         $this->validate = false;
     }
@@ -26,4 +34,11 @@ class OrginComponent extends Component
     public function validerInformation(){
         $this->validate = true;
     }
+
+    public function selectAcount(){
+
+        dd($this->destinationCompte);
+    }
+
+    
 }
