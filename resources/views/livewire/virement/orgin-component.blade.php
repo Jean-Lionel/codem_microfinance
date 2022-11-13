@@ -20,7 +20,7 @@
             <h5 class="card-title text-center">INFORMATION DU COMPTE DÉBITEUR</h5>
             <div class="d-flex justify-content-between">
                 <p>Numéro de compte :</p>
-                <h5>{{$compte->name}}</h5>
+                <h5>{{$compte->name}}</h5> 
             </div>
             <div class="d-flex justify-content-between">
                 <p>Nom et Prénom :</p>
@@ -109,7 +109,7 @@
 
     @if ($errorMessage)
         {{-- expr --}}
-        <p class="error  bg-danger text-capitalize text-center text-white">{{$errorMessage}}</p>
+        <p class="error  bg-danger  text-center text-white">{{$errorMessage}}</p>
     @endif
     <tr>
         <th>Montant</th>
