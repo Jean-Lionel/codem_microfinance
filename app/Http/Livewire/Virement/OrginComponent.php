@@ -14,6 +14,7 @@ class OrginComponent extends Component
     public $destinationCompteName;
     public $destinationCompte;
     public $validateCompteDestination;
+    public $errorMessage;
 
 
     public function mount()
@@ -47,10 +48,13 @@ class OrginComponent extends Component
     }
 
     public function saveOperation(){
-        dd($this->montant);
+        $msg = "Bonjour de compteName";
+        
         // Check if compte orgin contain this Montant
         // Validate exists compte
         // Get User
+
+        $this->errorMessage = $msg;
     }
 
     

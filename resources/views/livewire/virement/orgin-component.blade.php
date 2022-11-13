@@ -106,6 +106,11 @@
         <td><button wire:click="validateCompteDestinationInformation">Valider</button></td>
     </tr>
     @else
+
+    @if ($errorMessage)
+        {{-- expr --}}
+        <p class="error  bg-danger text-capitalize text-center text-white">{{$errorMessage}}</p>
+    @endif
     <tr>
         <th>Montant</th>
         <td>
